@@ -5,22 +5,17 @@
 var bestMatch = require('../data/friends');
 
 module.exports = function (app) {
+  app.get("/api/friends", function (req, res) {
+    res.json(bestMatch);
+  });
+
   app.post("/api/friends", function (req, res) {
-    //console log req the first time it works
+ 
+    console.log(req.body.scores);
 
-    //separate out object properties from req
-    console.log(req.body);
+    //we recieve info from the scores
     var userScores = req.body.scores;
-    /*
-    var friendSeekerName = req.body.name;
-    var friendSeekerPicture = req.body.pic;
-    var friendSeekerScores = req.body.scores;
-
-    //for loop to iterate through thirdProperty;
-    //for (var i = 0; i < scores.length; i += 1) {
-     //   var totalDifference = scores[i];
-   // }*/
-    //tengo que hacer un for loop entre todos mis arrays para ver cual es el mas parecido
+    
     var highestScore = 0;
     var highestIndex = 0;
     for (var i = 0; i < bestMatch.length; i++) {
@@ -28,36 +23,19 @@ module.exports = function (app) {
       var results = userScores.map((currentItem, index) => {
         return Math.abs(currentItem - currentMatch.scores[index]);
       });
-
+      //get the difference
       let matchScore = results.reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
       }, 0);
-
+      //compare the results
       if(matchScore > highestScore) {
         highestScore = matchScore;
         highestIndex = i;
       }
     }
 
-    bestFriend = bestMatch[highestIndex];
+    var bestFriend = bestMatch[highestIndex];
 
     res.json(bestFriend);
   });
 }
-  //friend seeker comes to page and selects 10 numbers
-  // As a friend seeker, I want to be able to select qualities in a friend.
-
-
-  //user submits selections
-
-
-  //program captures these selections
-
-
-  //program sends data to backend/via server
-
-
-  //program compares selections against 10 hard coded "friends"
-
-
-  //program presents closest match

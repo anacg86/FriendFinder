@@ -188,14 +188,32 @@
             </div>
         </div>
     </div>
-
+    <div class="modal hidden" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Your new bf4e!</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p id='bestFriend'></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
     <script type="text/javascript">
+    
 
         $("#submitbutton").on("click", function (event) {
             event.preventDefault();
-
             ///va a los selects y saca la informacion que selecteo
             var answerSelects = $(".answer");
             var scores = [];
@@ -207,12 +225,17 @@
                 scores: scores
             };
 
+            //mando los scores de la persona que llego, se lo manda al servidor para hacer los calculos
             $.ajax("/api/friends", {
                 type: "POST",
                 data: newFriendSeeker
-            }).then(function () {
-                console.log("It worked")
+                //se recibe el resultado del bestfriend del apiRoutes
+            }).then(function (bestFriend) {
+                console.log("Here you go, your new friend")
+                $('.modal').removeClass('hidden');
+                $('#bestfriend').html(bestFriend)
             });
+           
         });
 
     </script>

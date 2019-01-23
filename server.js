@@ -6,14 +6,16 @@ var express = require("express");
 var app = express();
 var PORT = process.env.PORT || 3000;
 
-//conectar las rutas con el servidor
-require("./app/routing/apiRoutes")(app);
-require("./app/routing/htmlRoutes")(app);
-
 //la info viene codificada 
 app.use(express.urlencoded({ extended: true }));
 //la info viene en jason 
 app.use(express.json());
+
+//conectar las rutas con el servidor
+require("./app/routing/apiRoutes")(app);
+require("./app/routing/htmlRoutes")(app);
+
+
 
 // Start our server so that it can begin listening to client requests.
 app.listen(PORT, function() {
